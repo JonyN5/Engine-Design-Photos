@@ -20,6 +20,8 @@ class dw_info : public QWidget
 public:
     explicit dw_info(QWidget *parent = 0);
     ~dw_info();
+signals:
+    void FileEmit(QFile*);
 private slots:
     void clear();
     void itemCounting(QListWidgetItem* item);
