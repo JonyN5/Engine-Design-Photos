@@ -10,8 +10,7 @@ dw_insert::dw_insert(QWidget *parent) :
 
 void dw_insert::itemCounting(QListWidgetItem* item)
 {
-    //надо отправлять сам файл(указатель на него). Так я исбавлюсь от лишней загрузки
-    //и проверки откр. ли файл или нет
+
 }
 
 void dw_insert::clear()
