@@ -18,8 +18,12 @@ class DownloadWin : public QMainWindow
 public:
     explicit DownloadWin(QMainWindow *parent = 0);
     ~DownloadWin();
+signals:
+    void setStatus(QString, int);
+    void ShowProgBar(bool);
+    void StepProgBar(int);
 public slots:
-    //void InsertSlot(); //загрузка на сервер выбранных фотографий
+    void clearItems();
     void Choice(); //загрузка фотографий и инф по ним
 private:
     Ui::DownloadWin *ui;

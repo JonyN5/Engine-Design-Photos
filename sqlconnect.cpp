@@ -1,5 +1,5 @@
 #include "sqlconnect.h"
-//#include "probar.h"
+#include "QtGlobal"
 
 SQLconnect::SQLconnect(QString DB,
                        QString User,
@@ -12,6 +12,11 @@ SQLconnect::SQLconnect(QString DB,
     HostName=Host;
     Password=Pass;
     DrivName=Driver;
+}
+
+SQLconnect::SQLconnect()
+{
+
 }
 
 bool SQLconnect::createConnection()
@@ -30,7 +35,6 @@ bool SQLconnect::createConnection()
                QMessageBox::warning(0, "Ошибка входа", "Неверный пользователь. Проверьте логин, пароль а тажке имя (ip) хоста к которому подключаетесь", QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
            return false;
        }
-       //if (QSqlDatabase::contains("first"))
        QSqlDatabase::removeDatabase("first");
        return true;
    }
@@ -51,57 +55,109 @@ bool SQLconnect::createConnection()
    }
 }
 
-void SQLconnect::InsertQuery(int FK,
+bool SQLconnect::InsertQuery(int FK,
                              QString Name,
                              QString *Bt64str,
                              QString *suf,
                              QString BirthD,
                              QString ModifiedD,
                              QString SightCh,
-                             int tabl)
+                             int tabl,
+                             int UKEY)
 {
-    QString str, strf;
+    QString str, strf, key;
+    key.setNum(UKEY);
     QSqlQuery query(QSqlDatabase::database(QSqlDatabase::contains("first") ? "first" : "second"));
     switch (tabl)
     {
     case 1:
-        strf="INSERT INTO [TestBaza].[dbo].[Двигатели] (UKEY, Название, Изображение, Тип, "
-             "[Дата создания], [Дата модификации], [Дата записи], Вид) "
-             "VALUES('%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8')";
+        if (UKEY!=0)
+        {
+            strf="UPDATE [TestBaza].[dbo].[Двигатели] "
+                 "SET Название='%1', "
+                      "Изображение='%2', "
+                      "Тип='%3', "
+                      "[Дата создания]='%4', "
+                      "[Дата модификации]='%5', "
+                      "[Дата записи]='%6', "
+                      "Вид='%7' "
+                 "WHERE UKEY='"+key+"'";
+        }
+        else
+            strf="INSERT INTO [TestBaza].[dbo].[Двигатели] (Название, Изображение, Тип, "
+                 "[Дата создания], [Дата модификации], [Дата записи], Вид) "
+                 "VALUES('%1', '%2', '%3', '%4', '%5', '%6', '%7')";
 
-        strf=strf.arg(SQLconnect::countRecords(1)+1);
+        /*strf=strf.arg(SQLconnect::countRecords(1)+1);*/
         break;
 
     case 2:
-        strf="INSERT INTO [TestBaza].[dbo].[Агрегаты] (EngUKEY, UKEY, Название, Изображение, Тип, "
-             "[Дата создания], [Дата модификации], [Дата записи], Вид) "
-             "VALUES('%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8', '%9')";
+        if (UKEY!=0)
+        {
+            strf="UPDATE [TestBaza].[dbo].[Агрегаты] "
+                 "SET Название='%1', "
+                      "Изображение='%2', "
+                      "Тип='%3', "
+                      "[Дата создания]='%4', "
+                      "[Дата модификации]='%5', "
+                      "[Дата записи]='%6', "
+                      "Вид='%7' "
+                 "WHERE UKEY='"+key+"'";
+        }
+        else
+        {
+            strf="INSERT INTO [TestBaza].[dbo].[Агрегаты] (EngUKEY, Название, Изображение, Тип, "
+                 "[Дата создания], [Дата модификации], [Дата записи], Вид) "
+                 "VALUES('%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8')";
 
-        strf=strf.arg(FK).arg(SQLconnect::countRecords(1)+SQLconnect::countRecords(2)+1);
+            strf=strf.arg(FK)/*.arg(SQLconnect::countRecords(2)+1)*/;
+        }
         break;
 
     case 3:
-        strf="INSERT INTO [TestBaza].[dbo].[Элементы] (AgrUKEY, UKEY, Название, Изображение, Тип, "
-             "[Дата создания], [Дата модификации], [Дата записи], Вид) "
-             "VALUES('%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8', '%9')";
+        if (UKEY!=0)
+        {
+            strf="UPDATE [TestBaza].[dbo].[Элементы] "
+                 "SET Название='%1', "
+                      "Изображение='%2', "
+                      "Тип='%3', "
+                      "[Дата создания]='%4', "
+                      "[Дата модификации]='%5', "
+                      "[Дата записи]='%6', "
+                      "Вид='%7' "
+                 "WHERE UKEY='"+key+"'";
+        }
+        else
+        {
+            strf="INSERT INTO [TestBaza].[dbo].[Элементы] (AgrUKEY, Название, Изображение, Тип, "
+                 "[Дата создания], [Дата модификации], [Дата записи], Вид) "
+                 "VALUES('%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8')";
 
-        strf=strf.arg(FK).arg(SQLconnect::countRecords(1)+SQLconnect::countRecords(2)+SQLconnect::countRecords(3)+1);
+            strf=strf.arg(FK)/*.arg(SQLconnect::countRecords(3)+1)*/;
+        }
         break;
     }
+    //int z=Bt64str->size();
     str=strf.arg(Name)
-            .arg(*Bt64str)
-            .arg(*suf)
-            .arg(BirthD)
-            .arg(ModifiedD)
-            .arg(QDateTime::currentDateTime().toString("yyyyMMdd HH:mm:ss"))
-            .arg(SightCh);
+             .arg(*Bt64str)
+             .arg(*suf)
+             .arg(BirthD)
+             .arg(ModifiedD)
+             .arg(QDateTime::currentDateTime().toString("yyyyMMdd HH:mm:ss"))
+             .arg(SightCh);
 
     query.exec(str);
     if (query.lastError().type() != QSqlError::NoError)
+    {
       QMessageBox::warning(0, "Ошибка загрузки", "Не удалось загрузить по следующим причинам: " + query.lastError().text());
+      return false;
+    }
+    else
+      return true;
 }
 
-int SQLconnect::countRecords(int tabl)
+
+/*int SQLconnect::countRecords(int tabl)
 {
     QSqlQuery query(QSqlDatabase::database(QSqlDatabase::contains("first") ? "first" : "second"));
     switch (tabl)
@@ -118,9 +174,9 @@ int SQLconnect::countRecords(int tabl)
     default: query.exec();
     }
     return query.numRowsAffected();
-}
+}*/
 
-QList <int> SQLconnect::SelectKey(int tabl, int FK)
+/*QList <int> SQLconnect::SelectKey(int tabl, int FK)
 { 
    int ukey;
    QSqlRecord rec;
@@ -165,7 +221,7 @@ QList <int> SQLconnect::SelectKey(int tabl, int FK)
 
        default: return Null;
    }
-}
+}*/
 
 QStringList SQLconnect::SelectName(int tabl, int FK)
 {
@@ -223,16 +279,25 @@ QStandardItemModel *SQLconnect::SelectQuery()
     queryUn.prepare("Select Название, Изображение, [Дата записи], Вид FROM [TestBaza].[dbo].[Элементы]"
                     "Where AgrUKEY=:KEY");
     QSqlRecord recEng=queryEng.record(), recAgr, recUn;
-    QStandardItemModel *model=new QStandardItemModel(queryEng.numRowsAffected(), 3);
+    int rows=queryEng.numRowsAffected();
+    QStandardItemModel *model=new QStandardItemModel(rows, 3);
     QStandardItem *first=new QStandardItem("Название");
     QStandardItem *sec=new QStandardItem("Дата записи");
     QStandardItem *third=new QStandardItem("Вид");
     model->setHorizontalHeaderItem(0, first);
     model->setHorizontalHeaderItem(1, sec);
     model->setHorizontalHeaderItem(2, third);
-    //QStandardItem *item;
+    if (rows>3)
+       emit ShowProgBar(true);
+    int k=1;
     while (queryEng.next())
     {
+        if (rows>3)
+        {
+            emit StepProgBar((100/rows)*k);
+            k++;
+            qApp->processEvents();
+        }
         int UKEY=queryEng.value(recEng.indexOf("UKEY")).toInt();
         QString Name=queryEng.value(recEng.indexOf("Название")).toString();
         QModelIndex indexEng=model->index(UKEY-1, 0);
@@ -242,8 +307,6 @@ QStandardItemModel *SQLconnect::SelectQuery()
         QString Sight=queryEng.value(recEng.indexOf("Вид")).toString();
         model->setData(model->index(UKEY-1, 2), Sight);
         QByteArray arr=queryEng.value(recEng.indexOf("Изображение")).toByteArray();
-        //item=new QStandardItem;
-        //item->setData(arr);
         model->setData(indexEng, arr, Qt::UserRole);
 
         queryAgr.bindValue(":KEY", UKEY);
@@ -261,6 +324,8 @@ QStandardItemModel *SQLconnect::SelectQuery()
             model->setData(model->index(RowAgr, 1, indexEng), Drec.toString("dd.MM.yyyy hh:mm:ss"));
             Sight=queryAgr.value(recAgr.indexOf("Вид")).toString();
             model->setData(model->index(RowAgr, 2, indexEng), Sight);
+            arr=queryAgr.value(recAgr.indexOf("Изображение")).toByteArray();
+            model->setData(indexAgr, arr, Qt::UserRole);
 
             UKEY=queryAgr.value(recAgr.indexOf("UKEY")).toInt();
             queryUn.bindValue(":KEY", UKEY);
@@ -278,39 +343,17 @@ QStandardItemModel *SQLconnect::SelectQuery()
                 model->setData(model->index(RowUn, 1, indexAgr), Drec.toString("dd.MM.yyyy hh:mm:ss"));
                 Sight=queryUn.value(recUn.indexOf("Вид")).toString();
                 model->setData(model->index(RowUn, 2, indexAgr), Sight);
+                arr=queryUn.value(recUn.indexOf("Изображение")).toByteArray();
+                model->setData(indexUn, arr, Qt::UserRole);
                 RowUn++;
             }
             RowAgr++;
         }
     }
+    if (rows>3)
+    {
+        emit StepProgBar(100);
+        emit ShowProgBar(false);
+    }
    return model;
-    //ProBar *pgr=new ProBar;
-//    QTreeWidgetItem *pitem=0;
-//    QStringList lst;
-//    lst<<"Название";
-//    lv->setHeaderHidden(false);
-//    lv->setHeaderLabels(lst);
-//    QPixmap img;
-//    QString str;
-//    QByteArray arr;
-//    QSqlQuery query(QSqlDatabase::database(QSqlDatabase::contains("first") ? "first" : "second"));
-//    query.exec("Select * FROM [TestBaza].[dbo].[Photo]");
-//    QSqlRecord rec=query.record();
-    //pgr->Step(0);
-    //int r=query.numRowsAffected();
-    //int c=100/r+1, i=1;
-//    while (query.next())
-//    {
-//        pitem = new QTreeWidgetItem(lv);
-//        arr=query.value(rec.indexOf("Изображение")).toByteArray();
-//        str=query.value(rec.indexOf("Название")).toString();
-//        pitem->setText(0, str);
-//        if (img.loadFromData(QByteArray::fromBase64(arr)))
-//           pitem->setIcon(0, QPixmap(img));
-        //pgr->Step(i*c);
-        //i++;
-        //qApp->processEvents();
-//    }
-    //pgr->Step(100);
-    //pgr->close();
 }

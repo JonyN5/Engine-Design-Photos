@@ -8,6 +8,7 @@
 #include "QFile"
 #include "QDateTime"
 #include "sqlconnect.h"
+#include "new_combo.h"
 
 namespace Ui {
 class dw_insert;
@@ -20,17 +21,22 @@ friend class SQLconnect;
 public:
     explicit dw_insert(QWidget* parent = 0);
     ~dw_insert();
-
+signals:
+    void setStatus(QString, int);
+    void ShowProgBar(bool);
 private slots:
     void clear();
     void FileCounting(QFile* Photo_file);
-    void SetFilterSelect(int NumItem);
+    void ItemCounting(QListWidgetItem* Photo_item);
+    void ClearListCombo(int state);
+    //void SetFilterSelect(int NumItem);
     void reactToToggl(bool check);
     void on_pB_DownLoad_clicked();
 private:
-    void setFK(int tabl, int KEY); //устанавливает значения для FK
+    //void setFK(int tabl, int KEY); //устанавливает значения для FK
     QFile *photo;
-    int FKEukey, FKAukey;
+    QListWidgetItem* item;
+    //int FKEukey, FKAukey;
     Ui::dw_insert *ui;
 };
 

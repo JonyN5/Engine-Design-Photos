@@ -22,6 +22,7 @@ public:
     ~dw_info();
 signals:
     void FileEmit(QFile*);
+    void ItemEmit(QListWidgetItem*);
 private slots:
     void clear();
     void itemCounting(QListWidgetItem* item);

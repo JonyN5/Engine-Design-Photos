@@ -3,7 +3,6 @@
 #include "QDir"
 #include "QMessageBox"
 #include "QFileDialog"
-//#include "QList"
 
 DownloadWin::DownloadWin(QMainWindow *parent) :
     QMainWindow(parent),
@@ -12,15 +11,18 @@ DownloadWin::DownloadWin(QMainWindow *parent) :
     ui->setupUi(this);
     dw_info *dwi=new dw_info;
     dw_insert *dwinst=new dw_insert;
-    //ui->dw_mdi->addSubWindow(dwi);
     ui->tabWidget->addTab(dwi, "Подробно");
     ui->tabWidget->addTab(dwinst, "Загрузка");
     connect(ui->pb_choice, SIGNAL(clicked()), SLOT(Choice()));
     connect(ui->pb_clear, SIGNAL(clicked()), ui->lw_download, SLOT(clear()));
+    connect(ui->pb_clear, SIGNAL(clicked()), SLOT(clearItems()));
     connect(ui->pb_clear, SIGNAL(clicked()), dwi, SLOT(clear()));
     connect(ui->pb_clear, SIGNAL(clicked()), dwinst, SLOT(clear()));
     connect(ui->lw_download, SIGNAL(itemClicked(QListWidgetItem*)), dwi, SLOT(itemCounting(QListWidgetItem*)));
     connect(dwi, SIGNAL(FileEmit(QFile*)), dwinst, SLOT(FileCounting(QFile*)));
+    connect(dwi, SIGNAL(ItemEmit(QListWidgetItem*)), dwinst, SLOT(ItemCounting(QListWidgetItem*)));
+    connect(dwinst, SIGNAL(ShowProgBar(bool)), SIGNAL(ShowProgBar(bool)));
+    connect(dwinst, SIGNAL(setStatus(QString, int)), SIGNAL(setStatus(QString, int)));
 }
 
 //void DownloadWin::InsertSlot()
@@ -74,12 +76,32 @@ void DownloadWin::Choice()
         QDir path(*lst.begin());
         pst->setValue("/home", path.absolutePath());
     }
+    int countPh=lst.count();
+    if (countPh>3)
+       emit ShowProgBar(true);
+    int k=1;
     foreach(QString str, lst) {
+        if (countPh>3)
+        {
+            emit StepProgBar((100/countPh)*k);
+            k++;
+            qApp->processEvents();
+        }
         pitem = new QListWidgetItem(ui->lw_download);
         pitem->setIcon(QIcon(str));
         pitem->setData(Qt::UserRole, str);
         Allitems<<pitem;
     }
+    if (countPh>3)
+    {
+        emit StepProgBar(100);
+        emit ShowProgBar(false);
+    }
+}
+
+void DownloadWin::clearItems()
+{
+    Allitems.clear();
 }
 
 DownloadWin::~DownloadWin()

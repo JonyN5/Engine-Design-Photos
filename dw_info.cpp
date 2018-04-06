@@ -16,6 +16,7 @@ void  dw_info::itemCounting(QListWidgetItem* item)
     if (photo->open(QIODevice::ReadOnly))
     {
         emit FileEmit(photo);
+        emit ItemEmit(item);
         QFileInfo inf(*photo);
         QPixmap lbPixmap(str);
         ui->lb_isize->setText(w.setNum(lbPixmap.size().width())+"x"+h.setNum(lbPixmap.size().height()));

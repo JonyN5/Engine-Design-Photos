@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1116</width>
+    <width>859</width>
     <height>585</height>
    </rect>
   </property>
@@ -23,14 +23,8 @@
    <string notr="true">QListWidgetItem { border-color: rgb(255, 255, 0);}</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
-    <property name="sizeConstraint">
-     <enum>QLayout::SetMinAndMaxSize</enum>
-    </property>
-    <property name="topMargin">
-     <number>9</number>
-    </property>
-    <item>
+   <layout class="QGridLayout" name="gridLayout" rowstretch="1,0">
+    <item row="0" column="0">
      <widget class="QSplitter" name="splitter">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -48,42 +42,17 @@
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="handleWidth">
-       <number>9</number>
+       <number>2</number>
       </property>
       <widget class="QListWidget" name="lw_download">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+       <property name="minimumSize">
+        <size>
+         <width>500</width>
+         <height>0</height>
+        </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">/*QListView {
-     show-decoration-selected: 1; расширяет диапазон выделения на всю ширину представления
- }*/
-
- QListView::item:alternate {
-     background: rgb(242, 60, 255);
- }
-
- QListView::item:selected {
-     border: 1px solid #ff070b;
- }
-
- QListView::item:selected:!active {
-     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                 stop: 0 #ff5457, stop: 1 #ff070b);
- }
-
- QListView::item:selected:active {
-     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                 stop: 0 #ff070b, stop: 1 #ff5457);
- }
-
- QListView::item:hover {
-     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                 stop: 0 #FAFBFE, stop: 1 #fdb7b8);
- }</string>
+        <string notr="true"/>
        </property>
        <property name="editTriggers">
         <set>QAbstractItemView::SelectedClicked</set>
@@ -120,6 +89,12 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="sizeIncrement">
         <size>
          <width>0</width>
@@ -135,7 +110,7 @@
       </widget>
      </widget>
     </item>
-    <item>
+    <item row="1" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>

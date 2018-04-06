@@ -2,12 +2,16 @@
 #define NEW_COMBO_H
 #include "QWidget"
 #include "QComboBox"
+#include "QCheckBox"
+#include "QRadioButton"
 #include "QProcess"
 #include "QLineEdit"
 #include "setapp.h"
+#include "sqlconnect.h"
 
 class new_combo : public QComboBox
 {
+friend class SQLconnect;
 public:
     explicit new_combo(QWidget *parent=0);
     void showPopup();
@@ -18,6 +22,7 @@ private:
     bool Nodes=false;
     QProcess getSQLNodes;
     QSettings *pst=SetApp::theApp()->settings();
+    QWidget *parent_obj;
 };
 
 #endif // NEW_COMBO_H

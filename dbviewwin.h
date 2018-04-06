@@ -12,14 +12,17 @@ class DBviewWin;
 class DBviewWin : public QWidget
 {
     Q_OBJECT
-friend class Sqlconnect;
 public:
     explicit DBviewWin(QWidget *parent = 0);
     ~DBviewWin();
+signals:
+   void ShowPB(bool);
+   void StepPB(int);
 public slots:
     void SelectSlot();
 private:
     Ui::DBviewWin *ui;
+    SQLconnect *sq;
 };
 
 #endif // DBVIEWWIN_H

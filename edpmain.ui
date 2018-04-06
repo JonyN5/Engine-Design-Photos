@@ -28,24 +28,31 @@
      <string>Меню</string>
     </property>
     <addaction name="action_auth"/>
-    <addaction name="action_2"/>
+    <addaction name="action_about"/>
     <addaction name="separator"/>
-    <addaction name="action_4"/>
+    <addaction name="action_ex"/>
    </widget>
    <addaction name="menu"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>35</height>
+    </size>
+   </property>
+  </widget>
   <action name="action_auth">
    <property name="text">
     <string>Авторизация...</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="action_about">
    <property name="text">
     <string>О программе...</string>
    </property>
   </action>
-  <action name="action_4">
+  <action name="action_ex">
    <property name="text">
     <string>Выход</string>
    </property>

@@ -7,25 +7,31 @@
 #include "QStandardItemModel"
 #include "QByteArray"
 #include "QMessageBox"
-//template <typename L>
+#include "QObject"
 
-class SQLconnect
+class SQLconnect : public QObject
 {
+   Q_OBJECT
 public:
    SQLconnect(QString DB, QString User, QString Host, QString Pass, QString Driver);
+   SQLconnect();
    bool createConnection ();
-   static int countRecords(int tabl);
-   static void InsertQuery(int FK,
+   //static int countRecords(int tabl);
+   static bool InsertQuery(int FK,
                            QString Name,
                            QString *Bt64str,
                            QString *suf,
                            QString BirthD,
                            QString ModifiedD,
                            QString SightCh,
-                           int tabl);
-   static QStandardItemModel *SelectQuery();
-   static QList <int> SelectKey(int tabl, int FK=0);
+                           int tabl,
+                           int UKEY);
+   QStandardItemModel *SelectQuery();
+   //static QList <int> SelectKey(int tabl, int FK=0);
    static QStringList SelectName(int tabl, int FK=0);
+signals:
+   void ShowProgBar(bool);
+   void StepProgBar(int);
 private:
    QString DBName,
            UserName,

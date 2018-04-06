@@ -7,36 +7,54 @@
     <x>0</x>
     <y>0</y>
     <width>920</width>
-    <height>579</height>
+    <height>606</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="1,0" rowminimumheight="0,0">
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" rowstretch="1,0">
    <item row="0" column="0">
     <widget class="QSplitter" name="splitter">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="handleWidth">
+      <number>2</number>
+     </property>
      <widget class="QTreeView" name="tr_view">
+      <property name="minimumSize">
+       <size>
+        <width>500</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="focusPolicy">
        <enum>Qt::TabFocus</enum>
       </property>
       <property name="whatsThis">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
+      <attribute name="headerMinimumSectionSize">
+       <number>70</number>
+      </attribute>
      </widget>
      <widget class="QTabWidget" name="tabWidget">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+      <property name="enabled">
+       <bool>true</bool>
       </property>
-      <property name="sizeIncrement">
+      <property name="minimumSize">
        <size>
-        <width>0</width>
+        <width>350</width>
         <height>0</height>
        </size>
       </property>
