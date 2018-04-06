@@ -2,9 +2,11 @@
 #define SQLCONNECT_H
 #include "QtSql"
 #include "QString"
-#include "QTreeWidget"
 #include "QStringList"
 #include "QDateTime"
+#include "QStandardItemModel"
+#include "QByteArray"
+#include "QMessageBox"
 //template <typename L>
 
 class SQLconnect
@@ -21,7 +23,7 @@ public:
                            QString ModifiedD,
                            QString SightCh,
                            int tabl);
-   static void SelectQuery(QTreeWidget *lv);
+   static QStandardItemModel *SelectQuery();
    static QList <int> SelectKey(int tabl, int FK=0);
    static QStringList SelectName(int tabl, int FK=0);
 private:

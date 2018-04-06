@@ -18,6 +18,7 @@ DownloadWin::DownloadWin(QMainWindow *parent) :
     connect(ui->pb_choice, SIGNAL(clicked()), SLOT(Choice()));
     connect(ui->pb_clear, SIGNAL(clicked()), ui->lw_download, SLOT(clear()));
     connect(ui->pb_clear, SIGNAL(clicked()), dwi, SLOT(clear()));
+    connect(ui->pb_clear, SIGNAL(clicked()), dwinst, SLOT(clear()));
     connect(ui->lw_download, SIGNAL(itemClicked(QListWidgetItem*)), dwi, SLOT(itemCounting(QListWidgetItem*)));
     connect(dwi, SIGNAL(FileEmit(QFile*)), dwinst, SLOT(FileCounting(QFile*)));
 }

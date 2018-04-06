@@ -36,7 +36,8 @@ SOURCES += \
     downloadwin.cpp \
     dw_info.cpp \
     new_combo.cpp \
-    dw_insert.cpp
+    dw_insert.cpp \
+    dbv_info.cpp
 
 HEADERS += \
     setapp.h \
@@ -47,7 +48,8 @@ HEADERS += \
     downloadwin.h \
     dw_info.h \
     new_combo.h \
-    dw_insert.h
+    dw_insert.h \
+    dbv_info.h
 
 FORMS += \
     authorization_menu.ui \
@@ -55,4 +57,5 @@ FORMS += \
     dbviewwin.ui \
     downloadwin.ui \
     dw_info.ui \
-    dw_insert.ui
+    dw_insert.ui \
+    dbv_info.ui

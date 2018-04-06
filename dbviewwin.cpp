@@ -6,13 +6,17 @@ DBviewWin::DBviewWin(QWidget *parent) :
     ui(new Ui::DBviewWin)
 {
     ui->setupUi(this);
-    ui->lw_view->isHeaderHidden();
+    ui->splitter->setStretchFactor(0,0);
+    ui->splitter->setStretchFactor(1,1);
+    dbv_info *dbvi=new dbv_info;
+    ui->tabWidget->addTab(dbvi, "Подробно");
     connect(ui->pb_GetBase, SIGNAL(clicked()), SLOT(SelectSlot()));
+    connect(ui->tr_view, SIGNAL(clicked(QModelIndex)), dbvi, SLOT(itemIndex(QModelIndex)));
 }
 
 void DBviewWin::SelectSlot()
 {
-    SQLconnect::SelectQuery(ui->lw_view);
+    ui->tr_view->setModel(SQLconnect::SelectQuery());
 }
 
 DBviewWin::~DBviewWin()

@@ -2,7 +2,8 @@
 #define DBVIEWWIN_H
 
 #include "sqlconnect.h"
-#include <QWidget>
+#include "dbv_info.h"
+#include "QWidget"
 
 namespace Ui {
 class DBviewWin;

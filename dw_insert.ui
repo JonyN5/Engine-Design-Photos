@@ -20,13 +20,13 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QGroupBox" name="groupBox">
+  <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
      <x>9</x>
-     <y>10</y>
-     <width>301</width>
-     <height>121</height>
+     <y>9</y>
+     <width>160</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="font">
@@ -37,39 +37,44 @@
      <bold>true</bold>
     </font>
    </property>
-   <property name="title">
-    <string>Наименование</string>
-   </property>
-   <property name="flat">
-    <bool>false</bool>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Наименование объекта:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pB_DownLoad">
+  <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>440</y>
-     <width>75</width>
-     <height>23</height>
+     <x>277</x>
+     <y>9</y>
+     <width>86</width>
+     <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
-    <string>Загрузить</string>
+    <string>Тип объекта:</string>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>281</width>
-     <height>81</height>
+     <x>10</x>
+     <y>32</y>
+     <width>241</width>
+     <height>106</height>
     </rect>
    </property>
-   <layout class="QFormLayout" name="formLayout">
-    <item row="0" column="0">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
+      <item alignment="Qt::AlignRight">
        <widget class="QLabel" name="lb_engine">
         <property name="font">
          <font>
@@ -82,7 +87,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignRight">
        <widget class="QLabel" name="lb_aggregate">
         <property name="font">
          <font>
@@ -95,7 +100,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignRight">
        <widget class="QLabel" name="lb_unit">
         <property name="font">
          <font>
@@ -108,9 +113,22 @@
         </property>
        </widget>
       </item>
+      <item alignment="Qt::AlignRight">
+       <widget class="QLabel" name="label_4">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Вид</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
-    <item row="0" column="1">
+    <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QComboBox" name="cB_engine">
@@ -151,73 +169,30 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QSplitter" name="splitter">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <widget class="QComboBox" name="cB_sight">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>140</y>
-     <width>151</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout_2">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_4">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Вид</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QComboBox" name="cB_sight">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>9</pointsize>
-       </font>
-      </property>
-      <property name="editable">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>10</y>
-     <width>141</width>
-     <height>96</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout_3">
-    <item>
-     <widget class="QLabel" name="label_5">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Тип объекта:</string>
-      </property>
-     </widget>
-    </item>
+  <widget class="QWidget" name="">
+   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0,0">
     <item>
      <widget class="QRadioButton" name="rB_engine">
       <property name="font">
@@ -256,6 +231,43 @@
        <string>Элемент</string>
       </property>
      </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="pB_DownLoad">
+      <property name="text">
+       <string>Загрузить</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>

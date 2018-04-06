@@ -16,24 +16,37 @@ dw_insert::dw_insert(QWidget *parent) :
     ui->cB_sight->addItems(sightList);
     ui->rB_engine->setChecked(true);
     ui->cB_engine->addItems(SQLconnect::SelectName(1));
+    ui->cB_engine->lineEdit()->setText("");
 }
 
-void dw_insert::setFK(int KEY)
+void dw_insert::setFK(int tabl, int KEY)
 {
-    FKukey=KEY;
+    switch (tabl)
+    {
+        case 2: FKEukey=KEY; break;
+        case 3: FKAukey=KEY; break;
+    }
 }
 
 void dw_insert::SetFilterSelect(int NumItem)
 {
     if (static_cast<QComboBox*>(sender())==ui->cB_engine)
     {
-        setFK((SQLconnect::SelectKey(1)).at(NumItem+1));
-        ui->cB_aggregate->addItems(SQLconnect::SelectName(2, FKukey));
+        setFK(2, SQLconnect::SelectKey(1).at(NumItem));
+        if (ui->cB_aggregate->count()!=0)
+            ui->cB_aggregate->clear();
+        ui->cB_aggregate->addItems(SQLconnect::SelectName(2, FKEukey));
+        if (ui->cB_aggregate->isEditable())
+            ui->cB_aggregate->lineEdit()->setText("");
     }
     if (static_cast<QComboBox*>(sender())==ui->cB_aggregate)
     {
-        setFK((SQLconnect::SelectKey(2, FKukey)).at(NumItem+1));
-        ui->cB_unit->addItems(SQLconnect::SelectName(3, FKukey));
+        setFK(3, SQLconnect::SelectKey(2, FKEukey).at(NumItem));
+        if (ui->cB_unit->count()!=0)
+            ui->cB_unit->clear();
+        ui->cB_unit->addItems(SQLconnect::SelectName(3, FKAukey));
+        if (ui->cB_unit->isEditable())
+            ui->cB_unit->lineEdit()->setText("");
     }
 }
 
@@ -79,8 +92,9 @@ void dw_insert::reactToToggl(bool check)
 }
 
 void dw_insert::clear()
-{
-    //по аналогии очищает..хотя..надо подумать
+{   
+    ui->rB_engine->toggle();
+    ui->cB_engine->lineEdit()->setText("");
 }
 
 void dw_insert::on_pB_DownLoad_clicked()
@@ -88,6 +102,7 @@ void dw_insert::on_pB_DownLoad_clicked()
     QByteArray *photoInByte=0;
     QString *suf=0, *byte64PhotoStr=0, BirthDate, ModifiedDate,
             Name, Sight;
+    int KeyI;
     QFileInfo inf(*photo);
     if (photo->open(QIODevice::ReadOnly))
     {
@@ -96,16 +111,19 @@ void dw_insert::on_pB_DownLoad_clicked()
         {
            tabl=1;
            Name=ui->cB_engine->lineEdit()->text();
+           KeyI=0;
         }
         if (ui->rB_aggregate->isChecked())
         {
            tabl=2;
            Name=ui->cB_aggregate->lineEdit()->text();
+           KeyI=FKEukey;
         }
         if (ui->rB_unit->isChecked())
         {
            tabl=3;
            Name=ui->cB_unit->lineEdit()->text();
+           KeyI=FKAukey;
         }
         Sight=ui->cB_sight->currentText();
         photoInByte=new QByteArray(photo->readAll());
@@ -114,7 +132,7 @@ void dw_insert::on_pB_DownLoad_clicked()
         suf=new QString(inf.completeSuffix()); //формат изображения
         BirthDate=inf.birthTime().toString("yyyyMMdd HH:mm:ss");
         ModifiedDate=inf.lastModified().toString("yyyyMMdd HH:mm:ss");
-        SQLconnect::InsertQuery(FKukey, Name, byte64PhotoStr, suf, BirthDate, ModifiedDate, Sight, tabl);
+        SQLconnect::InsertQuery(KeyI, Name, byte64PhotoStr, suf, BirthDate, ModifiedDate, Sight, tabl);
     }
     photo->close();// проверить, закрывает ли указатель dw_info, и если да то наверное закрыть тут
 }

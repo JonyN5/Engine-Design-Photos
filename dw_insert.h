@@ -28,9 +28,9 @@ private slots:
     void reactToToggl(bool check);
     void on_pB_DownLoad_clicked();
 private:
-    void setFK(int KEY); //устанавливает значения для FK
+    void setFK(int tabl, int KEY); //устанавливает значения для FK
     QFile *photo;
-    int FKukey;
+    int FKEukey, FKAukey;
     Ui::dw_insert *ui;
 };
 
